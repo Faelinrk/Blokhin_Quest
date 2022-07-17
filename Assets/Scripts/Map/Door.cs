@@ -1,14 +1,28 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
-namespace Quest.Map
+namespace Quest.Interactable
 {
+    [RequireComponent(typeof(Animator))]
     public class Door : MonoBehaviour
     {
-        public void Open()
+        private Animator animator;
+        private const string IsOpenAnim = "OpenDoor";
+        [SerializeField] private bool isOpened = false;
+        public bool IsOpened
         {
-            GetComponent<Rigidbody>().isKinematic = false;
+            get => isOpened;
+            set => isOpened = value;
+        }
+        private void Start()
+        {
+            animator = GetComponent<Animator>();
+        }
+
+        public void Interact()
+        {
+            if (!isOpened) return;
+            animator.SetBool(IsOpenAnim, !animator.GetBool(IsOpenAnim));
         }
     }
 
