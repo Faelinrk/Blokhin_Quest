@@ -14,33 +14,26 @@ namespace Quest.Enemies
         [SerializeField] private float rotationSpeed = 5f;
         [SerializeField] private GameObject bulletPrefab;
         [SerializeField] private Transform bulletPoint;
+        private PlayerSearch playerSearch;
 
         private void Start()
         {
+            playerSearch = GetComponent<PlayerSearch>();
             player = GameObject.FindWithTag(Constants.PlayerTag).transform;
             StartCoroutine(Shoot());
         }
 
         private void Update()
         {
-            playerVisible = LookAtPlayer();
+            LookAtPlayer();
+            playerVisible = playerSearch.LookForPlayer(player,ray,bulletPoint,visionDist);
         }
 
-        private bool LookAtPlayer()
+        private void LookAtPlayer()
         {
             Vector3 targetDirection = player.position - transform.position;
-            ray = new Ray(bulletPoint.position,targetDirection);
             Vector3 newDirection = Vector3.RotateTowards(transform.forward,targetDirection,rotationSpeed*Time.deltaTime,0f);
             transform.rotation=Quaternion.LookRotation(newDirection);
-            if (Physics.Raycast(ray, out RaycastHit hit,visionDist))
-            {
-                if (hit.transform.CompareTag(Constants.PlayerTag))
-                {
-                    return true;
-                }
-            }
-
-            return false;
         }
         
         private IEnumerator Shoot()

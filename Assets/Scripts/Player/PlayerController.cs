@@ -41,7 +41,7 @@ namespace  Quest.Player
         private void Move()
         {
             bool onGround = Physics.CheckSphere(legs.position, legsRadius, groundMask);
-            if (onGround) velocity.y = -2f;
+            if (onGround) velocity.y = -.05f;
             else velocity.y += gravity * Mathf.Pow(Time.deltaTime, 2);
             verticalInput = Input.GetAxis(Vertical) * Time.deltaTime * speed;
             horizotalInput = Input.GetAxis(Horizontal) * Time.deltaTime * speed;
