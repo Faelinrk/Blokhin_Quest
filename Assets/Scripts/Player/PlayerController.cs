@@ -10,6 +10,7 @@ namespace  Quest.Player
         [Header(("Move"))]
         private const string Vertical = "Vertical";
         private const string Horizontal = "Horizontal";
+        private const string Jump = "Jump";
         private float verticalInput;
         private float horizotalInput;
         private CharacterController controller;
@@ -21,6 +22,7 @@ namespace  Quest.Player
         [SerializeField] private Transform legs;
         [SerializeField] private float legsRadius=0.04f;
         [SerializeField] private LayerMask groundMask;
+        [SerializeField] private float jumpPower = .07f; 
 
         [Header("Shooting")] 
         [SerializeField] private Transform bulletPoint;
@@ -41,10 +43,15 @@ namespace  Quest.Player
         private void Move()
         {
             bool onGround = Physics.CheckSphere(legs.position, legsRadius, groundMask);
-            if (onGround) velocity.y = -.05f;
-            else velocity.y += gravity * Mathf.Pow(Time.deltaTime, 2);
-            verticalInput = Input.GetAxis(Vertical) * Time.deltaTime * speed;
-            horizotalInput = Input.GetAxis(Horizontal) * Time.deltaTime * speed;
+            if (Input.GetButtonDown(Jump) && onGround)
+                velocity.y += jumpPower;
+            else
+            {
+                if (onGround) velocity.y = -.05f;
+                else velocity.y += gravity * Mathf.Pow(Time.deltaTime, 2);
+                verticalInput = Input.GetAxis(Vertical) * Time.deltaTime * speed;
+                horizotalInput = Input.GetAxis(Horizontal) * Time.deltaTime * speed;
+            }
             Vector3 move = horizotalInput * transform.right + verticalInput * transform.forward + velocity;
             controller.Move(move);
         }

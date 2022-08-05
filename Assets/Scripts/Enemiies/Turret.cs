@@ -16,9 +16,13 @@ namespace Quest.Enemies
         [SerializeField] private Transform bulletPoint;
         private PlayerSearch playerSearch;
 
-        private void Start()
+        private void Awake()
         {
             playerSearch = GetComponent<PlayerSearch>();
+        }
+
+        private void Start()
+        {
             player = GameObject.FindWithTag(Constants.PlayerTag).transform;
             StartCoroutine(Shoot());
         }
