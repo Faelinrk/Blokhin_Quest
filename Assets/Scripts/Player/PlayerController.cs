@@ -29,7 +29,7 @@ namespace  Quest.Player
         [SerializeField] private GameObject bulletPrefab;
         [SerializeField] private GameObject landMinePrefab;
         
-        private void Start()
+        private void Awake()
         {
             controller = GetComponent<CharacterController>();
         }

@@ -7,6 +7,8 @@ using UnityEngine.UI;
 namespace Quest.Enemies
 {
     [RequireComponent(typeof(NavMeshAgent))]
+    [RequireComponent(typeof(PlayerSearch))]
+    [RequireComponent(typeof(Animator))]
     public class Patrool : MonoBehaviour
     {
         private enum PatroolStates
@@ -14,20 +16,26 @@ namespace Quest.Enemies
             Wait, Patrool, Chacing
         }
         private NavMeshAgent navMeshAgent;
+        private PlayerSearch playerSearch;
         private Transform patroolPoint;
         private int index;
         private Transform player;
         private Ray ray;
+        private Animator animator;
+        
         [SerializeField] private Transform[] patroolPoints;
         [SerializeField] private PatroolStates patroolState;
         [SerializeField] private float visionDist = 25f;
         [SerializeField] private Transform eyes;
-        private PlayerSearch playerSearch;
+        
+        private static readonly int Agressive = Animator.StringToHash("Agressive");
+
 
         private void Awake()
         {
             playerSearch = GetComponent<PlayerSearch>();
             navMeshAgent = GetComponent<NavMeshAgent>();
+            animator = GetComponent<Animator>();
         }
 
         private void Start()
@@ -55,9 +63,11 @@ namespace Quest.Enemies
                         break;
                     case PatroolStates.Chacing:
                         navMeshAgent.SetDestination(player.position);
+                        animator.SetBool(Agressive, true);
                         if (!playerSearch.LookForPlayer(player, ray, eyes, visionDist))
                         {
                             StartCoroutine(ReturnToPatrool());
+                            animator.SetBool(Agressive, false);
                         }
                         break;
                     case PatroolStates.Wait:
