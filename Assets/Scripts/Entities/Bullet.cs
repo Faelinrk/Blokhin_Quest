@@ -1,3 +1,4 @@
+using System;
 using Quest;
 using Quest.Common;
 using UnityEngine;
@@ -12,9 +13,13 @@ namespace  Quest.Entities
         [SerializeField] private int damage = 10;
         private const int LiveTime = 3;
 
-        private void Start()
+        private void Awake()
         {
             rb = GetComponent<Rigidbody>();
+        }
+
+        private void Start()
+        {
             rb.velocity = transform.up * bulletSpeed;
             Destroy(gameObject, LiveTime);
         }

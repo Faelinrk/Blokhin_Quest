@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace Quest.Enemies
 {
+    [RequireComponent(typeof(PlayerSearch))]
     public class Turret : MonoBehaviour
     {
         private Transform player;
