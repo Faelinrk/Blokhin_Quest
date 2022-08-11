@@ -2,32 +2,39 @@ using Quest;
 using Quest.Common;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+namespace  Quest.Entities
 {
-    private Rigidbody rb;
-    [SerializeField] private float bulletSpeed = 10;
-    [SerializeField] private int damage = 10;
+    [RequireComponent(typeof(Rigidbody))]
+    public class Bullet : MonoBehaviour
+    {
+        private Rigidbody rb;
+        [SerializeField] private float bulletSpeed = 10;
+        [SerializeField] private int damage = 10;
+        private const int LiveTime = 3;
 
-    void Start()
-    {
-        rb = GetComponent<Rigidbody>();
-    }
-    
-    void Update()
-    {
-        rb.velocity = transform.up * bulletSpeed;
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        Debug.Log(other.tag);
-        if (other.CompareTag(Constants.PlayerTag) || other.CompareTag(Constants.EnemyTag))
+        private void Start()
         {
-            if (other.TryGetComponent<HpObject>(out HpObject hpObject))
-            {
-                hpObject.GetDamage(damage);
-            }
+            rb = GetComponent<Rigidbody>();
+            rb.velocity = transform.up * bulletSpeed;
+            Destroy(gameObject, LiveTime);
         }
-        Destroy(gameObject);
+    
+        // private void Update()
+        // {
+        //     //rb.AddForce(transform.up * bulletSpeed);
+        // }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.CompareTag(Constants.PlayerTag) || other.CompareTag(Constants.EnemyTag))
+            {
+                if (other.TryGetComponent<HpObject>(out HpObject hpObject))
+                {
+                    hpObject.GetDamage(damage);
+                }
+            }
+            Destroy(gameObject);
+        }
     }
 }
+

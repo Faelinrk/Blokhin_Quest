@@ -13,7 +13,6 @@ namespace Quest.Enemies
             Debug.DrawRay(eyes.position,targetDirection);
             if (Physics.Raycast(ray, out RaycastHit hit,visionDist))
             {
-                Debug.Log(hit.transform.tag);
                 if (hit.transform.CompareTag(Constants.PlayerTag))
                 {
                     return true;

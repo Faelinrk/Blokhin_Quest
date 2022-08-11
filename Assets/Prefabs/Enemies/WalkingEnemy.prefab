@@ -239,5 +239,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   patroolPoints: []
   patroolState: 0
-  visionDist: 25
+  visionDist: 100
   eyes: {fileID: 0}

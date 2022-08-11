@@ -5,19 +5,24 @@ using Quest;
 using Quest.Common;
 using UnityEngine;
 
-public class LandMine : MonoBehaviour
+namespace Quest.Entities
 {
-    [SerializeField] private int damage = 10;
-
-    private void OnCollisionEnter(Collision other)
+    [RequireComponent(typeof(Rigidbody))]
+    public class LandMine : MonoBehaviour
     {
-        if (other.gameObject.CompareTag(Constants.EnemyTag))
+        [SerializeField] private int damage = 10;
+
+        private void OnCollisionEnter(Collision other)
         {
-            if (other.gameObject.TryGetComponent<HpObject>(out HpObject hpObject))
+            if (other.gameObject.CompareTag(Constants.EnemyTag))
             {
-                hpObject.GetDamage(damage);
-                Destroy(gameObject);
+                if (other.gameObject.TryGetComponent<HpObject>(out HpObject hpObject))
+                {
+                    hpObject.GetDamage(damage);
+                    Destroy(gameObject);
+                }
             }
         }
     }
 }
+
