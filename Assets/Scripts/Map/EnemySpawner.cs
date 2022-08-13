@@ -6,7 +6,7 @@ namespace Quest.Map
     {
         [SerializeField] private GameObject enemyPrefab;
 
-        private void Start()
+        private void Awake()
         {
             Instantiate(enemyPrefab, transform);
         }
