@@ -38,7 +38,9 @@ namespace  Quest.Entities
                     hpObject.GetDamage(damage);
                 }
             }
-            Destroy(gameObject);
+
+            GetComponent<MeshRenderer>().enabled = false;
+            GetComponent<CapsuleCollider>().enabled = false;
         }
     }
 }

@@ -24,17 +24,20 @@ namespace Quest.UI
         {
             gm = FindObjectOfType<GameManager>();
             playerHp = GameObject.FindGameObjectWithTag(Constants.PlayerTag).GetComponent<HpObject>();
+            
         }
 
         private void Start()
         {
+            soundSlider.value = AudioListener.volume;
             lastHP = playerHp.Hp;
             healthSlider.maxValue = lastHP;
             healthSlider.value = lastHP;
-            soundSlider.onValueChanged.AddListener(vol => AudioListener.volume = vol);
+            
             settingsButton.onClick.AddListener(OpenSettings);
             backButton.onClick.AddListener(CloseSettings);
             exitButton.onClick.AddListener(gm.ExitGame);
+            soundSlider.onValueChanged.AddListener(vol => AudioListener.volume = vol);
 
         }
 
