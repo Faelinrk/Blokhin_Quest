@@ -36,6 +36,7 @@ namespace  Quest.Player
 
         private void Update()
         {
+            if (Time.timeScale == 0) return;
             Move();
             Shoot();
         }

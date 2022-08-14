@@ -22,6 +22,7 @@ namespace Quest.Player
 
         private void Update()
         {
+            if (Time.timeScale == 0) return;
             verticalInput += Input.GetAxis(MouseX)  * rotationSpeed ;
             horizotalInput -= Input.GetAxis(MouseY) * rotationSpeed;
             horizotalInput = Mathf.Clamp(horizotalInput, -45, 45);
