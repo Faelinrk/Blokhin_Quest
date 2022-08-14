@@ -22,7 +22,7 @@ namespace Quest.Common
             Debug.Log(enemiesLeft);
         }
 
-        public void NextLevel()
+        private void NextLevel()
         {
             int nextLevelIndex = SceneManager.GetActiveScene().buildIndex + 1;
             if (nextLevelIndex+1<=SceneManager.sceneCountInBuildSettings)
